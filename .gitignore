@@ -1,0 +1,5 @@
+rails_app/config/master.key
+rails_app/.env
+rails_app/log/*
+rails_app/tmp/*
+postgres/.env

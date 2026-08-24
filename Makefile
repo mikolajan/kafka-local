@@ -1,0 +1,23 @@
+DIR1=./postgres
+DIR2=./kafka
+DIR3=./rails_app
+
+.PHONY: up down restart copy-env
+
+up:
+	docker compose -f $(DIR1)/docker-compose.yml up -d
+	docker compose -f $(DIR2)/docker-compose.yml up -d
+	docker compose -f $(DIR3)/docker-compose.yml up -d
+
+down:
+	docker compose -f $(DIR1)/docker-compose.yml down
+	docker compose -f $(DIR2)/docker-compose.yml down
+	docker compose -f $(DIR3)/docker-compose.yml down
+
+restart: down up
+
+.PHONY: copy-env
+
+copy-env:
+	-cp $(DIR1)/.env.example $(DIR1)/.env
+	-cp $(DIR3)/.env.example $(DIR3)/.env
