@@ -32,13 +32,16 @@ RUN apt-get update -qq && \
 ARG NODE_VERSION=20.11.1
 ARG YARN_VERSION=latest
 ENV PATH=/usr/local/node/bin:$PATH
+
+# add this line before `npm install` for fix certifacates problem
+# npm config set strict-ssl false && \
 RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
     npm install -g yarn@$YARN_VERSION && \
     rm -rf /tmp/node-build-master
 
 # Install application gems
-COPY Gemfile  ./
+COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile

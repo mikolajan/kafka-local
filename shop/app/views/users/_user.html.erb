@@ -1,0 +1,33 @@
+<div id="<%= dom_id user %>">
+  <div class="container-fluid py-2 border-bottom">
+    <div class="row align-items-center text-secondary">
+      <div class="col-md-1 text-dark fw-semibold">
+        <%= user.id %>
+      </div>
+
+      <div class="col-md-3 text-dark fw-semibold">
+        <%= user.name %>
+      </div>
+
+      <div class="col-md-2 text-dark">
+        <%= user.email %>
+      </div>
+
+      <div class="col-md-2 text-dark">
+        <%= user.phone %>
+      </div>
+
+      <div class="col-md-2 text-<%= user.marketing_email? ? 'dark' : 'muted' %>">
+        <span class="">
+           <input class="form-check-input opacity-100" type="checkbox" <%= 'checked' if user.marketing_email? %> disabled>
+        </span> marketing email
+      </div>
+
+      <div class="col-md-2 text-<%= user.marketing_email? ? 'dark' : 'muted' %>">
+        <span>
+           <input class="form-check-input opacity-100" type="checkbox" <%= 'checked' if user.marketing_sms? %> disabled>
+        </span> marketing sms
+      </div>
+    </div>
+  </div>
+</div>

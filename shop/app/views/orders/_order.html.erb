@@ -1,0 +1,21 @@
+<div id="<%= dom_id order %>">
+  <div class="container-fluid py-2 border-bottom">
+    <div class="row align-items-center text-secondary">
+      <div class="col-md-1 text-dark fw-semibold">
+        <%= order.id %>
+      </div>
+
+      <div class="col-md-2 text-dark fw-semibold">
+        <%= order.user.name %>
+      </div>
+
+      <div class="col-md-2 text-dark">
+        <%= order.number %>
+      </div>
+
+      <div class="col-md-7 text-dark">
+        <%= order.items %>
+      </div>
+    </div>
+  </div>
+</div>

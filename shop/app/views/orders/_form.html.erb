@@ -1,0 +1,39 @@
+<%= form_with(model: order) do |f| %>
+  <% if order.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+        <% order.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <div class="row mb-3">
+      <div class="col-sm-2">
+        <%= f.label :user_id, class: 'col-form-label' %>
+      </div>
+      <div class="col-sm-10">
+        <%= f.collection_select :user_id, User.all, :id, :name, { include_blank: false }, class: 'form-select' %>
+      </div>
+    </div>
+
+    <% %w[iron clock refrigerator oven stove fan].each do |item| %>
+      <div class="row mb-3">
+        <div class="col-sm-2">
+          <%= hidden_field_tag "order[items][][name]", item %>
+          <%= item %>
+        </div>
+
+        <div class="col-sm-1">
+          <%= number_field_tag "order[items][][count]", 0, min: 0, max: 10, class: 'form-control' %>
+        </div>
+      </div>
+    <% end %>
+
+    <%= f.submit %>
+  </div>
+<% end %>
