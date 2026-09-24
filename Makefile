@@ -1,6 +1,6 @@
 DIR1=./postgres
 DIR2=./kafka
-DIR3=./rails_app
+DIR3=./rails-shop
 
 .PHONY: up down restart copy-env
 
