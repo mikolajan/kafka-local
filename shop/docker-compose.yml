@@ -1,5 +1,5 @@
 services:
-  rails-shop:
+  rails:
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
     volumes:
       - ./log:/rails/log
       - ./tmp:/rails/tmp
-      - .:/rails-shop
+      - .:/rails
     env_file:
       - .env
     networks:

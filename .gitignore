@@ -1,5 +1,5 @@
-rails-shop/config/master.key
-rails-shop/.env
-rails-shop/log/*
-rails-shop/tmp/*
+shop/config/master.key
+shop/.env
+shop/log/*
+shop/tmp/*
 postgres/.env
