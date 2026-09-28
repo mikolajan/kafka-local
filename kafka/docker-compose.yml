@@ -65,6 +65,23 @@ services:
           server:
             port: "8086"
 
+  init-kafka:
+    image: confluentinc/cp-kafka:7.6.0
+    depends_on:
+      - kafka-broker
+    command: >
+      sh -c "
+      echo '=== НАЧАЛО ИНИЦИАЛИЗАЦИИ ТОПИКОВ ===' &&
+      echo 'Ожидание доступности Кафки на kafka-broker:9092...' &&
+      until kafka-topics --bootstrap-server kafka-broker:9092 --list; do sleep 2; done;
+
+      echo 'Принудительное создание топиков...' &&
+      kafka-topics --bootstrap-server kafka-broker:9092 --create --if-not-exists --topic shop.orders --partitions 1 --replication-factor 1 &&
+      kafka-topics --bootstrap-server kafka-broker:9092 --create --if-not-exists --topic shop.customers --partitions 1 --replication-factor 1 &&
+      kafka-topics --bootstrap-server kafka-broker:9092 --create --if-not-exists --topic shop.notifications --partitions 1 --replication-factor 1 &&
+      echo '=== ВСЕ ТОПИКИ УСПЕШНО ПОДГОТОВЛЕНЫ ==='
+      "
+
 networks:
   kafka_network:
     name: kafka_network

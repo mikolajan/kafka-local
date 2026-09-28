@@ -1,0 +1,20 @@
+services:
+  streams:
+    build: .
+    container_name: kafka-streams
+    restart: on-failure
+    environment:
+      BOOTSTRAP_SERVERS: "kafka-broker:9092"
+    networks:
+      - postgres_network
+      - kafka_network
+
+networks:
+  postgres_network:
+    name: postgres_network
+    external: true
+    driver: bridge
+  kafka_network:
+    name: kafka_network
+    external: true
+    driver: bridge
