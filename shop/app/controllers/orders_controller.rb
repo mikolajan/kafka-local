@@ -12,6 +12,12 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+        Karafka.producer.produce_async(
+          topic: 'shop.orders', key: @order.kafka_number, payload: {
+            number: @order.kafka_number, user_id: @order.user.kafka_user_id, status: @order.status,
+            items: @order.items, created_at: @order.created_at
+        }.to_json)
+
         format.html { redirect_to orders_path, notice: "Order was successfully created." }
       else
         format.html { render :new, status: :unprocessable_content }

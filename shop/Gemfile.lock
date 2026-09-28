@@ -95,6 +95,7 @@ GEM
     drb (2.2.3)
     erb (6.0.7)
     erubi (1.13.1)
+    ffi (1.17.4-x86_64-linux-gnu)
     globalid (1.4.0)
       activesupport (>= 6.1)
     i18n (1.15.2)
@@ -113,6 +114,20 @@ GEM
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
     json (2.21.2)
+    karafka (2.6.1)
+      karafka-core (>= 2.6.2, < 2.7.0)
+      karafka-rdkafka (>= 0.28.0)
+      waterdrop (>= 2.10.2, < 3.0.0)
+      zeitwerk (~> 2.3)
+    karafka-core (2.6.4)
+      karafka-rdkafka (>= 0.20.0)
+      logger (>= 1.6.0)
+    karafka-rdkafka (0.30.0-x86_64-linux-gnu)
+      ffi (~> 1.17.1)
+      json (> 2.0)
+      logger
+      mini_portile2 (~> 2.6)
+      rake (> 12)
     language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
     logger (1.7.0)
@@ -127,6 +142,7 @@ GEM
       net-smtp
     marcel (1.2.1)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.9)
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
@@ -260,6 +276,10 @@ GEM
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
     useragent (0.16.11)
+    waterdrop (2.10.5)
+      karafka-core (>= 2.5.12, < 3.0.0)
+      karafka-rdkafka (>= 0.24.0)
+      zeitwerk (~> 2.3)
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -280,6 +300,7 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
+  karafka
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.2.3)

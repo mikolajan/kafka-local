@@ -16,7 +16,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_27_121505) do
 
   create_table "orders", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "number", null: false
     t.string "status", default: "pending", null: false
     t.jsonb "items", default: [], null: false
     t.datetime "created_at", null: false
