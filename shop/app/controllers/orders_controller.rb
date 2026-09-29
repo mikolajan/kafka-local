@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   def index
-    @orders = Order.all.includes(:user)
+    @orders = Order.all.includes(:user).order(id: :desc).limit(10)
   end
 
   def new

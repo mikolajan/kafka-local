@@ -79,6 +79,7 @@ services:
       kafka-topics --bootstrap-server kafka-broker:9092 --create --if-not-exists --topic shop.orders --partitions 1 --replication-factor 1 &&
       kafka-topics --bootstrap-server kafka-broker:9092 --create --if-not-exists --topic shop.customers --partitions 1 --replication-factor 1 &&
       kafka-topics --bootstrap-server kafka-broker:9092 --create --if-not-exists --topic shop.notifications --partitions 1 --replication-factor 1 &&
+      kafka-topics --bootstrap-server kafka-broker:9092 --create --if-not-exists --topic shop.top-pending-items --partitions 1 --replication-factor 1 &&
       echo '=== ВСЕ ТОПИКИ УСПЕШНО ПОДГОТОВЛЕНЫ ==='
       "
 
