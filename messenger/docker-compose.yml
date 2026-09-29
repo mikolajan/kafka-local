@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "3000:3000"
+      - "3001:3000"
     command: ./bin/rails server -b 0.0.0.0
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
@@ -15,8 +15,25 @@ services:
       - .:/rails
     env_file:
       - .env
-    tty: true
-    stdin_open: true
+    networks:
+      - postgres_network
+      - kafka_network
+
+  karafka:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    command: bundle exec karafka server
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+      - KAFKA_BROKERS=kafka-broker:9092
+    volumes:
+      - ./log:/rails/log
+      - ./tmp:/rails/tmp
+      - .:/rails
+    env_file:
+      - .env
     networks:
       - postgres_network
       - kafka_network

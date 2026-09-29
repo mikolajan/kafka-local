@@ -2,7 +2,7 @@ services:
   streams:
     build: .
     container_name: kafka-streams
-    restart: on-failure
+    restart: always
     environment:
       BOOTSTRAP_SERVERS: "kafka-broker:9092"
     networks:

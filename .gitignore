@@ -1,5 +1,13 @@
+messenger/config/master.key
+messenger/.env
+messenger/log/*
+messenger/tmp/*
+
+postgres/.env
+
 shop/config/master.key
 shop/.env
 shop/log/*
 shop/tmp/*
-postgres/.env
+
+streams/target/*
