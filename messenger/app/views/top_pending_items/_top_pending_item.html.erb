@@ -1,0 +1,21 @@
+<div id="<%= dom_id top_pending_item %>">
+  <div class="container-fluid py-2 border-bottom">
+    <div class="row align-items-center text-secondary">
+      <div class="col-md-1 text-dark fw-semibold">
+        <%= top_pending_item.id %>
+      </div>
+
+      <div class="col-md-2 text-dark">
+        <%= long_time_from_payload(top_pending_item.window_start) %>
+      </div>
+
+      <div class="col-md-2 text-dark">
+        <%= long_time_from_payload(top_pending_item.window_end) %>
+      </div>
+
+      <div class="col-md-7 text-dark">
+        <%= top_pending_item.items.sort_by {|k, v| v}.map { _1.values.join(':') }.join(', ') %>
+      </div>
+    </div>
+  </div>
+</div>

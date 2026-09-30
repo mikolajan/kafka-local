@@ -1,3 +1,5 @@
+connects/.env
+
 messenger/config/master.key
 messenger/.env
 messenger/log/*

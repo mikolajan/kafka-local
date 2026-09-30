@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_09_29_123131) do
+ActiveRecord::Schema[7.2].define(version: 2026_09_29_133841) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,6 +18,19 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_29_123131) do
     t.jsonb "payload"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "status", default: "pending", null: false
+    t.jsonb "items", default: [], null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "top_pending_items", force: :cascade do |t|
+    t.json "payload"
   end
 
   create_table "users", force: :cascade do |t|
@@ -29,4 +42,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_29_123131) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "orders", "users"
 end

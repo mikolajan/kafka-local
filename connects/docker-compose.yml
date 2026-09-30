@@ -1,0 +1,57 @@
+services:
+  kafka-connect:
+    image: quay.io/debezium/connect:latest
+    container_name: kafka-connect-debezium
+    restart: always
+    ports:
+      - "8083:8083"
+    environment:
+      - BOOTSTRAP_SERVERS=kafka-broker:9092
+      - GROUP_ID=connect-cluster
+      - CONFIG_STORAGE_TOPIC=connect-configs
+      - OFFSET_STORAGE_TOPIC=connect-offsets
+      - STATUS_STORAGE_TOPIC=connect-status
+      - KEY_CONVERTER=org.apache.kafka.connect.storage.StringConverter
+      - VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+      - VALUE_CONVERTER_SCHEMAS_ENABLE=false
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/connectors"]
+      interval: 10s   # Проверяем каждые 10 секунд
+      timeout: 5s
+      retries: 12     # Даем 12 попыток (суммарно до 2 минут на запуск)
+      start_period: 30s # Первая проверка начнется только через 30 секунд после старта
+    networks:
+      - postgres_network
+      - kafka_network
+
+  kafka-connect-init:
+    image: curlimages/curl:latest
+    container_name: kafka-connect-initializer
+    environment:
+      - KAFKA_TOPIC=shop.top-pending-items
+      - DB_HOST=${POSTGRES_HOST}
+      - DB_PORT=${POSTGRES_PORT}
+      - DB_NAME=${POSTGRES_DB}
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - TARGET_TABLE=top_pending_items
+    depends_on:
+      kafka-connect:
+        condition: service_healthy
+    volumes:
+      - ./init-connect.sh:/tmp/init-connect.sh
+    entrypoint: ["/bin/sh"]
+    command: ["/tmp/init-connect.sh"]
+    networks:
+      - postgres_network
+      - kafka_network
+
+networks:
+  postgres_network:
+    name: postgres_network
+    external: true
+    driver: bridge
+  kafka_network:
+    name: kafka_network
+    external: true
+    driver: bridge
