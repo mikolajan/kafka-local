@@ -27,6 +27,7 @@ services:
   kafka-connect-init:
     image: curlimages/curl:latest
     container_name: kafka-connect-initializer
+    restart: always
     environment:
       - KAFKA_TOPIC=shop.top-pending-items
       - DB_HOST=${POSTGRES_HOST}
